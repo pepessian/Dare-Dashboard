@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ro"><head><meta charset="utf-8"><title>MISSION 40% – COACHES</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#faf7ff;--panel:#fff;--line:#e5dcf3;--text:#1a1024;--mut:#6b6080;--mag:#e610cc;--yel:#eaff00;--grn:#12b76a;--amb:#e08a00;--fire:#ff5c00}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0711;--panel:#160e21;--line:#2b1d3d;--text:#f6f1ff;--mut:#a095b8;--mag:#ff1ae6;--grn:#2dff9a;--amb:#ffb020}}
+:root[data-theme="dark"]{--bg:#0b0711;--panel:#160e21;--line:#2b1d3d;--text:#f6f1ff;--mut:#a095b8;--mag:#ff1ae6;--grn:#2dff9a;--amb:#ffb020}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,"Segoe UI",Arial,sans-serif;
+background-image:radial-gradient(900px 400px at 100% 0,rgba(234,255,0,.14),transparent 60%),radial-gradient(700px 400px at 0 0,rgba(255,26,230,.14),transparent 60%)}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 40px}
+header{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;margin-bottom:18px}
+h1{margin:0;font-size:clamp(26px,5vw,44px);font-weight:800;letter-spacing:-.5px;line-height:1}
+h1 b{color:var(--mag)}h1 span{display:block;font-size:13px;font-weight:600;letter-spacing:3px;color:var(--mut);margin-top:6px}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--grn)}
+.live i{width:9px;height:9px;border-radius:50%;background:var(--grn);animation:p 1.2s infinite}
+@keyframes p{50%{opacity:.25}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kpi small{color:var(--mut);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.kpi div{font-size:28px;font-weight:800}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:12px;position:relative;overflow:hidden;transition:box-shadow .4s,border-color .4s}
+.card.done{border-color:var(--grn);box-shadow:0 0 22px -4px var(--grn)}
+.card.fire{border-color:var(--fire);box-shadow:0 0 26px -2px var(--fire)}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;justify-content:space-between}
+.name{font-weight:800;font-size:16px}.name em{font-style:normal;color:var(--mut);font-weight:500;font-size:12px;margin-left:6px}
+.badge{font-size:11px;font-weight:800;letter-spacing:1px;padding:4px 10px;border-radius:99px;border:1px solid currentColor}
+.pct{font-size:26px;font-weight:800;min-width:64px;text-align:right}
+.track{position:relative;height:30px;margin:16px 4px 26px;border-radius:99px;background:var(--line)}
+.fill{position:absolute;inset:0 auto 0 0;border-radius:99px;background:linear-gradient(90deg,var(--mag),var(--yel));transition:width .9s cubic-bezier(.2,.9,.3,1)}
+.car{position:absolute;top:50%;font-size:30px;transform:translate(-50%,-52%) rotate(0);transition:left .9s cubic-bezier(.2,.9,.3,1);filter:drop-shadow(0 3px 4px rgba(0,0,0,.4))}
+.mk{position:absolute;top:-6px;bottom:-6px;width:0;border-left:2px dashed var(--mut)}
+.mk.t{border-left:3px solid var(--grn)}
+.mk span{position:absolute;top:100%;left:0;transform:translateX(-50%);margin-top:4px;font-size:10px;font-weight:700;color:var(--mut);white-space:nowrap}
+.mk.t span{color:var(--grn)}
+.start,.end{position:absolute;top:100%;font-size:10px;color:var(--mut);margin-top:4px;font-weight:600}.start{left:0}.end{right:0}
+.row2{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.msg{font-size:14px;font-weight:700}
+.dots{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:10px;cursor:pointer;background:transparent;padding:0;color:#000;transition:.25s}
+.dot.on{background:var(--yel);border-color:var(--yel);transform:scale(1.1)}
+.btns button{font:inherit;font-weight:700;font-size:12px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--text);padding:6px 12px;cursor:pointer}
+.btns button.go{background:var(--mag);border-color:var(--mag);color:#fff}
+.btns button:active{transform:scale(.95)}
+.pop{position:absolute;right:16px;top:8px;font-weight:800;color:var(--yel);background:#000;padding:4px 10px;border-radius:10px;animation:pop 1.2s forwards;pointer-events:none;z-index:3}
+@keyframes pop{0%{transform:translateY(10px) scale(.6);opacity:0}20%{transform:none;opacity:1}80%{opacity:1}100%{transform:translateY(-14px);opacity:0}}
+.lb h2{margin:0 0 10px;font-size:15px;letter-spacing:2px}
+.lb ol{list-style:none;margin:0;padding:0}
+.lb li{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;font-weight:600}
+.lb li:last-child{border:0}
+.lb .bar{flex:1;height:8px;border-radius:9px;background:var(--line);overflow:hidden}
+.lb .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--mag),var(--yel))}
+.lb .v{width:42px;text-align:right;font-weight:800}
+.tiers{display:grid;gap:6px;margin-top:14px;font-size:12px;font-weight:700}
+.tiers div{padding:8px 10px;border-radius:10px;border:1px solid var(--line)}
+.toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top,0px));transform:translate(-50%,-140%);background:#000;color:var(--yel);border:2px solid var(--yel);padding:10px 18px;border-radius:14px;font-weight:800;z-index:9;transition:transform .5s;max-width:92vw;text-align:center}
+.toast.show{transform:translate(-50%,0)}
+body.sheet .btns,body.sheet .reset{display:none}body.sheet .dot{pointer-events:none}
+.reset{font:inherit;font-size:12px;font-weight:700;background:transparent;color:var(--mut);border:1px solid var(--line);border-radius:99px;padding:6px 12px;cursor:pointer}
+</style></head><body>
+<div class="toast" id="toast"></div>
+<div class="wrap">
+<header>
+ <h1>🚀 MISSION <b>40%</b><span>COACHES · LIVE BOARD</span></h1>
+ <div style="display:flex;gap:10px;align-items:center"><span class="live"><i></i>LIVE</span><span id="upd" style="font-size:11px;color:var(--mut)"></span><button class="reset" id="reset">↺ Reset demo</button></div>
+</header>
+<div class="kpis" id="kpis"></div>
+<div class="grid">
+ <div id="tracks"></div>
+ <aside>
+  <div class="card lb"><h2>🏆 CLASAMENT</h2><ol id="lb"></ol>
+   <div class="tiers"><div>🟡 30% — IN THE GAME</div><div>🟢 40% — TARGET DONE</div><div>🔥 50% — COACH ON FIRE</div></div>
+   <p style="font-size:11px;color:var(--mut);margin:12px 0 0">Prospector “DONE” = 2 dosare depuse în săptămână. Apasă pe cercuri sau pe „+ Dosar” ca să simulezi.</p>
+  </div>
+ </aside>
+</div>
+</div>
+<script>
+// ====== LIPEȘTE AICI link-ul CSV din Google Sheets (File > Share > Publish to web > CSV) ======
+const SHEET_URL="https://docs.google.com/spreadsheets/d/1UrbIBwv1xpBC4OHNt9yUhE5EyvMWkyaAWLc4Npq19BU/edit?gid=213030276#gid=213030276";
+const REFRESH_SEC=30, TARGET_DOSARE=2;
+// =========================================================================================
+const EMO=["🚀","🏎️","🛸","✈️","🏍️","🚁","🛵","🚤","🚲"];
+const DEMO=[["Maria",15,7],["Andrei",12,5],["Elena",8,3],["Dan",14,5],["Ioana",12,4],["Vlad",10,3],["Ana",12,3]];
+let C=[],sig="";const $=id=>document.getElementById(id);
+const pct=c=>c.t?Math.round(c.d/c.t*100):0;
+const need=(c,p)=>Math.max(0,Math.ceil(p/100*c.t-1e-9)-c.d);
+function tier(c){const p=pct(c);return p>=50?["🔥 COACH ON FIRE","var(--fire)"]:p>=40?["🟢 TARGET DONE","var(--grn)"]:p>=30?["🟡 IN THE GAME","var(--amb)"]:["⚪ WARM-UP","var(--mut)"]}
+function msg(c){const p=pct(c);
+ if(p>=50)return "🔥 Ești COACH ON FIRE! Continuă așa.";
+ if(p>=40){const n=need(c,50);return `✅ TARGET DONE! Încă ${n} prospector${n==1?"":"i"} → COACH ON FIRE.`}
+ const n=need(c,40);
+ return n==1?"🎯 ÎMI MAI TREBUIE UN SINGUR PROSPECTOR → TARGET DONE!":`Îți mai lipsesc ${n} prospectori pentru 40%.`}
+function build(){
+ $("tracks").innerHTML=C.map((c,i)=>`<div class="card" id="k${i}">
+ <div class="top"><div class="name">${c.e} COACH ${c.n.toUpperCase()}<em>👤 ${c.t} prospectori</em></div>
+  <span class="badge" id="b${i}"></span><div class="pct" id="p${i}"></div></div>
+ <div class="track"><div class="fill" id="f${i}"></div>
+  <div class="mk" style="left:30%"><span>30</span></div><div class="mk t" style="left:40%"><span>🎯 40%</span></div><div class="mk" style="left:50%"><span>🔥 50</span></div>
+  <div class="car" id="c${i}">${c.e}</div><div class="start">0</div><div class="end">100%</div></div>
+ <div class="row2"><div class="msg" id="m${i}"></div><div class="btns"><button data-d="-1" data-i="${i}">−</button> <button class="go" data-d="1" data-i="${i}">+ Dosar 💥</button></div></div>
+ <div class="dots" id="d${i}"></div></div>`).join("");
+}
+function paint(){
+ const tot=C.reduce((a,c)=>a+c.t,0),dn=C.reduce((a,c)=>a+c.d,0);
+ $("kpis").innerHTML=`<div class="kpi"><small>Media echipei</small><div>${tot?Math.round(dn/tot*100):0}%</div></div><div class="kpi"><small>Coachi la 40%+</small><div>${C.filter(c=>pct(c)>=40).length}/${C.length}</div></div><div class="kpi"><small>Prospectori DONE</small><div>${dn}/${tot}</div></div><div class="kpi"><small>Coachi On Fire</small><div>${C.filter(c=>pct(c)>=50).length} 🔥</div></div>`;
+ C.forEach((c,i)=>{const p=pct(c),[t,col]=tier(c);
+  $("p"+i).textContent=p+"%";$("p"+i).style.color=col;
+  const b=$("b"+i);b.textContent=t;b.style.color=col;
+  $("f"+i).style.width=p+"%";$("c"+i).style.left=p+"%";
+  $("m"+i).textContent=msg(c);
+  $("k"+i).className="card"+(p>=50?" fire":p>=40?" done":"");
+  $("d"+i).innerHTML=Array.from({length:c.t},(_,j)=>`<button class="dot${j<c.d?" on":""}" data-i="${i}" data-j="${j}">${j<c.d?"✓":""}</button>`).join("")});
+ const r=[...C].sort((a,b)=>pct(b)-pct(a)||b.d-a.d);
+ $("lb").innerHTML=r.map((c,k)=>`<li><span style="width:24px">${["🥇","🥈","🥉"][k]||(k+1)+"."}</span><span style="width:54px">${c.n}</span><span class="bar"><i style="width:${pct(c)}%"></i></span><span class="v">${pct(c)}%</span></li>`).join("");
+}
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove("show"),2600)}
+function crossed(n,b,a){if(b<50&&a>=50)toast(`🔥 ${n.toUpperCase()} — COACH ON FIRE!`);else if(b<40&&a>=40)toast(`🟢 ${n.toUpperCase()} — TARGET DONE!`);else if(b<30&&a>=30)toast(`🟡 ${n.toUpperCase()} — IN THE GAME!`)}
+function pop(i){const s=document.createElement("div");s.className="pop";s.textContent="💥 DOSAR DONE!";$("k"+i).appendChild(s);setTimeout(()=>s.remove(),1300)}
+function setData(list){
+ const old={};C.forEach(c=>old[c.n]=c);
+ const nc=list.map(([n,t,d],i)=>({n,e:EMO[i%EMO.length],t,d}));
+ const ns=nc.map(c=>c.n+c.t).join("|"),first=!C.length;
+ C=nc;if(ns!==sig||first){sig=ns;build()}
+ paint();
+ if(!first)C.forEach((c,i)=>{const o=old[c.n];if(o&&c.d>o.d){pop(i);crossed(c.n,pct(o),pct(c))}});
+}
+function parseCSV(t){const rows=[];let r=[],f="",q=false;
+ for(let i=0;i<t.length;i++){const ch=t[i];
+  if(q){if(ch=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=ch}
+  else if(ch=='"')q=true;else if(ch==","){r.push(f);f=""}
+  else if(ch=="\n"){r.push(f);rows.push(r);r=[];f=""}else if(ch!="\r")f+=ch}
+ if(f||r.length){r.push(f);rows.push(r)}return rows}
+async function load(){
+ try{
+  const res=await fetch(SHEET_URL+(SHEET_URL.includes("?")?"&":"?")+"t="+Date.now());
+  if(!res.ok)throw 0;
+  const rows=parseCSV(await res.text()).slice(1).filter(r=>r[0]&&r[0].trim());
+  const m=new Map();
+  rows.forEach(r=>{const n=r[0].trim();const g=m.get(n)||[0,0];g[0]++;if((parseInt(r[2])||0)>=TARGET_DOSARE)g[1]++;m.set(n,g)});
+  setData([...m].map(([n,[t,d]])=>[n,t,d]));
+  $("upd").textContent="actualizat "+new Date().toLocaleTimeString("ro-RO",{hour:"2-digit",minute:"2-digit"});
+ }catch(e){$("upd").textContent="⚠️ nu pot citi foaia Google";}
+}
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||SHEET_URL)return;
+ if(b.dataset.d||b.dataset.j!==undefined){const i=+b.dataset.i,c=C[i];
+  const d=b.dataset.d?+b.dataset.d:(+b.dataset.j<c.d?-1:1);
+  const nd=Math.min(c.t,Math.max(0,c.d+d));if(nd===c.d)return;const bf=pct(c);c.d=nd;paint();
+  if(d>0){pop(i);crossed(c.n,bf,pct(c))}}});
+$("reset").onclick=()=>{C=[];setData(DEMO)};
+if(SHEET_URL){document.body.classList.add("sheet");load();setInterval(load,REFRESH_SEC*1000)}else setData(DEMO);
+</script></body></html>
