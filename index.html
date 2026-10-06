@@ -113,10 +113,10 @@ function msg(c){const p=pct(c);
  if(p>=50)return "🔥 You are COACH ON FIRE! Keep it up.";
  if(p>=40){const n=need(c,50);return `✅ TARGET DONE! ${n} more prospect${n==1?"":"s"} → COACH ON FIRE.`}
  const n=need(c,40);
- return n==1?"🎯 JUST ONE MORE PROSPECT NEEDED → TARGET DONE!":`You need ${n} more prospects for 40%.`}
+ return n==1?"🎯 JUST ONE MORE PROSPECT NEEDED → TARGET DONE!":`You need ${n} more prospectors for 40%.`}
 function build(){
  $("tracks").innerHTML=C.map((c,i)=>`<div class="card" id="k${i}">
- <div class="top"><div class="name">${c.e} COACH ${c.n.toUpperCase()}<em>👤 ${c.t} prospects</em></div>
+ <div class="top"><div class="name">${c.e} COACH ${c.n.toUpperCase()}<em>👤 ${c.t} prospectors</em></div>
   <span class="badge" id="b${i}"></span><div class="pct" id="p${i}"></div></div>
  <div class="track"><div class="fill" id="f${i}"></div>
   <div class="mk" style="left:30%"><span>30</span></div><div class="mk t" style="left:40%"><span>🎯 40%</span></div><div class="mk" style="left:50%"><span>🔥 50</span></div>
@@ -126,7 +126,7 @@ function build(){
 }
 function paint(){
  const tot=C.reduce((a,c)=>a+c.t,0),dn=C.reduce((a,c)=>a+c.d,0);
- $("kpis").innerHTML=`<div class="kpi"><small>Team Average</small><div>${tot?Math.round(dn/tot*100):0}%</div></div><div class="kpi"><small>Coaches at 40%+</small><div>${C.filter(c=>pct(c)>=40).length}/${C.length}</div></div><div class="kpi"><small>Prospects DONE</small><div>${dn}/${tot}</div></div><div class="kpi"><small>Coaches On Fire</small><div>${C.filter(c=>pct(c)>=50).length} 🔥</div></div>`;
+ $("kpis").innerHTML=`<div class="kpi"><small>Team Average</small><div>${tot?Math.round(dn/tot*100):0}%</div></div><div class="kpi"><small>Coaches at 40%+</small><div>${C.filter(c=>pct(c)>=40).length}/${C.length}</div></div><div class="kpi"><small>prospectors DONE</small><div>${dn}/${tot}</div></div><div class="kpi"><small>Coaches On Fire</small><div>${C.filter(c=>pct(c)>=50).length} 🔥</div></div>`;
  C.forEach((c,i)=>{const p=pct(c),[t,col]=tier(c);
   $("p"+i).textContent=p+"\%";$("p"+i).style.color=col;
   const b=$("b"+i);b.textContent=t;b.style.color=col;
