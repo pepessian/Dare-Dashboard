@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ro"><head><meta charset="utf-8"><title>MISSION 45% – COACHES</title>
+<html lang="en"><head><meta charset="utf-8"><title>MISSION 45% – COACHES</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
@@ -71,7 +71,7 @@ h1 b{color:var(--mag)}h1 span{display:block;font-size:13px;font-weight:600;lette
 <div class="grid">
  <div id="tracks"></div>
  <aside>
-  <div class="card lb"><h2>🏆 CLASAMENT</h2><ol id="lb"></ol>
+  <div class="card lb"><h2>🏆 LEADERBOARD</h2><ol id="lb"></ol>
    <div class="tiers"><div>🟡 30% — IN THE GAME</div><div>🟢 40% — TARGET DONE</div><div>🔥 50% — COACH ON FIRE</div></div>
   </div>
  </aside>
@@ -81,24 +81,24 @@ h1 b{color:var(--mag)}h1 span{display:block;font-size:13px;font-weight:600;lette
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-// Shared, cross-device progress storage. Every "+ Dosar" / dot click writes here,
+// Shared, cross-device progress storage. Every "+ File" / dot click writes here,
 // and every open tab/device listens for changes and updates instantly.
 const firebaseConfig = {
-  apiKey: "AIzaSyDN3KiRFr3lfgggCuKVF3c0Zbe6VKqbUKk",
-  authDomain: "dare-dashboard-e2f36.firebaseapp.com",
-  databaseURL: "https://dare-dashboard-e2f36-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "dare-dashboard-e2f36",
-  storageBucket: "dare-dashboard-e2f36.firebasestorage.app",
-  messagingSenderId: "1088096779959",
-  appId: "1:1088096779959:web:3ac3876a60460b769c5732",
-  measurementId: "G-11PMQR6MRL"
+ apiKey: "AIzaSyDN3KiRFr3lfgggCuKVF3c0Zbe6VKqbUKk",
+ authDomain: "dare-dashboard-e2f36.firebaseapp.com",
+ databaseURL: "https://dare-dashboard-e2f36-default-rtdb.europe-west1.firebasedatabase.app",
+ projectId: "dare-dashboard-e2f36",
+ storageBucket: "dare-dashboard-e2f36.firebasestorage.app",
+ messagingSenderId: "1088096779959",
+ appId: "1:1088096779959:web:3ac3876a60460b769c5732",
+ measurementId: "G-11PMQR6MRL"
 };
 const fbApp = initializeApp(firebaseConfig);
 const db = getDatabase(fbApp);
 const progressRef = ref(db, "progress");
 const keyOf = n => n.replace(/[.#$\[\]\/]/g, "_"); // sanitize name for use as an RTDB key
 
-// ====== LIPEȘTE AICI link-ul CSV din Google Sheets (File > Share > Publish to web > CSV) ======
+// ====== PASTE HERE the CSV link from Google Sheets (File > Share > Publish to web > CSV) ======
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vR2klr0pq2ENi1PvP6qzcnFDCITE667wl0JfYsqFh6EWzkKQL_jivnwfMz3Tid0uU64N846kVoAmHnD/pub?gid=213030276&single=true&output=csv";
 const REFRESH_SEC=30;
 // =========================================================================================
@@ -110,27 +110,27 @@ const pct=c=>c.t?Math.round(c.d/c.t*100):0;
 const need=(c,p)=>Math.max(0,Math.ceil(p/100*c.t-1e-9)-c.d);
 function tier(c){const p=pct(c);return p>=50?["🔥 COACH ON FIRE","var(--fire)"]:p>=40?["🟢 TARGET DONE","var(--grn)"]:p>=30?["🟡 IN THE GAME","var(--amb)"]:["⚪ WARM-UP","var(--mut)"]}
 function msg(c){const p=pct(c);
- if(p>=50)return "🔥 Ești COACH ON FIRE! Continuă așa.";
- if(p>=40){const n=need(c,50);return `✅ TARGET DONE! Încă ${n} prospector${n==1?"":"i"} → COACH ON FIRE.`}
+ if(p>=50)return "🔥 You are COACH ON FIRE! Keep it up.";
+ if(p>=40){const n=need(c,50);return `✅ TARGET DONE! ${n} more prospect${n==1?"":"s"} → COACH ON FIRE.`}
  const n=need(c,40);
- return n==1?"🎯 ÎMI MAI TREBUIE UN SINGUR PROSPECTOR → TARGET DONE!":`Îți mai lipsesc ${n} prospectori pentru 40%.`}
+ return n==1?"🎯 JUST ONE MORE PROSPECT NEEDED → TARGET DONE!":`You need ${n} more prospects for 40%.`}
 function build(){
  $("tracks").innerHTML=C.map((c,i)=>`<div class="card" id="k${i}">
- <div class="top"><div class="name">${c.e} COACH ${c.n.toUpperCase()}<em>👤 ${c.t} prospectori</em></div>
+ <div class="top"><div class="name">${c.e} COACH ${c.n.toUpperCase()}<em>👤 ${c.t} prospects</em></div>
   <span class="badge" id="b${i}"></span><div class="pct" id="p${i}"></div></div>
  <div class="track"><div class="fill" id="f${i}"></div>
   <div class="mk" style="left:30%"><span>30</span></div><div class="mk t" style="left:40%"><span>🎯 40%</span></div><div class="mk" style="left:50%"><span>🔥 50</span></div>
   <div class="car" id="c${i}">${c.e}</div><div class="start">0</div><div class="end">100%</div></div>
- <div class="row2"><div class="msg" id="m${i}"></div><div class="btns"><button data-d="-1" data-i="${i}">−</button> <button class="go" data-d="1" data-i="${i}">+ Dosar 💥</button></div></div>
+ <div class="row2"><div class="msg" id="m${i}"></div><div class="btns"><button data-d="-1" data-i="${i}">−</button> <button class="go" data-d="1" data-i="${i}">+ File 💥</button></div></div>
  <div class="dots" id="d${i}"></div></div>`).join("");
 }
 function paint(){
  const tot=C.reduce((a,c)=>a+c.t,0),dn=C.reduce((a,c)=>a+c.d,0);
- $("kpis").innerHTML=`<div class="kpi"><small>Media echipei</small><div>${tot?Math.round(dn/tot*100):0}%</div></div><div class="kpi"><small>Coachi la 40%+</small><div>${C.filter(c=>pct(c)>=40).length}/${C.length}</div></div><div class="kpi"><small>Prospectori DONE</small><div>${dn}/${tot}</div></div><div class="kpi"><small>Coachi On Fire</small><div>${C.filter(c=>pct(c)>=50).length} 🔥</div></div>`;
+ $("kpis").innerHTML=`<div class="kpi"><small>Team Average</small><div>${tot?Math.round(dn/tot*100):0}%</div></div><div class="kpi"><small>Coaches at 40%+</small><div>${C.filter(c=>pct(c)>=40).length}/${C.length}</div></div><div class="kpi"><small>Prospects DONE</small><div>${dn}/${tot}</div></div><div class="kpi"><small>Coaches On Fire</small><div>${C.filter(c=>pct(c)>=50).length} 🔥</div></div>`;
  C.forEach((c,i)=>{const p=pct(c),[t,col]=tier(c);
-  $("p"+i).textContent=p+"%";$("p"+i).style.color=col;
+  $("p"+i).textContent=p+"\%";$("p"+i).style.color=col;
   const b=$("b"+i);b.textContent=t;b.style.color=col;
-  $("f"+i).style.width=p+"%";$("c"+i).style.left=p+"%";
+  $("f"+i).style.width=p+"\%";$("c"+i).style.left=p+"%";
   $("m"+i).textContent=msg(c);
   $("k"+i).className="card"+(p>=50?" fire":p>=40?" done":"");
   $("d"+i).innerHTML=Array.from({length:c.t},(_,j)=>`<button class="dot${j<c.d?" on":""}" data-i="${i}" data-j="${j}">${j<c.d?"✓":""}</button>`).join("")});
@@ -139,7 +139,7 @@ function paint(){
 }
 function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove("show"),2600)}
 function crossed(n,b,a){if(b<50&&a>=50)toast(`🔥 ${n.toUpperCase()} — COACH ON FIRE!`);else if(b<40&&a>=40)toast(`🟢 ${n.toUpperCase()} — TARGET DONE!`);else if(b<30&&a>=30)toast(`🟡 ${n.toUpperCase()} — IN THE GAME!`)}
-function pop(i){const s=document.createElement("div");s.className="pop";s.textContent="💥 DOSAR DONE!";$("k"+i).appendChild(s);setTimeout(()=>s.remove(),1300)}
+function pop(i){const s=document.createElement("div");s.className="pop";s.textContent="💥 FILE DONE!";$("k"+i).appendChild(s);setTimeout(()=>s.remove(),1300)}
 // Rebuilds C from current totals (t, from the sheet) + progress (d, from Firebase — shared,
 // live, and identical for every visitor). Called whenever either source changes.
 function rebuild(){
@@ -169,8 +169,8 @@ async function load(){
   rows.forEach(r=>{const n=r[0].trim();m.set(n,(m.get(n)||0)+1)});
   totals={};order=[...m.keys()];m.forEach((t,n)=>totals[n]=t);
   rebuild();
-  $("upd").textContent="actualizat "+new Date().toLocaleTimeString("ro-RO",{hour:"2-digit",minute:"2-digit"});
- }catch(e){$("upd").textContent="⚠️ nu pot citi foaia Google";}
+  $("upd").textContent="updated "+new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+ }catch(e){$("upd").textContent="⚠️ unable to read Google sheet";}
 }
 document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
  if(b.dataset.d||b.dataset.j!==undefined){const i=+b.dataset.i,c=C[i];if(!c)return;
@@ -179,7 +179,7 @@ document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)r
   set(ref(db,"progress/"+keyOf(c.n)),nd); // writes to Firebase; the onValue listener below then updates every open tab, including this one
  }});
 $("reset").onclick=()=>{
- if(!confirm("Resetezi progresul pentru TOȚI coachii, pe toate device-urile?"))return;
+ if(!confirm("Reset progress for ALL coaches across all devices?"))return;
  C.forEach(c=>set(ref(db,"progress/"+keyOf(c.n)),0));
 };
 onValue(progressRef,snap=>{progress=snap.val()||{};rebuild()});
